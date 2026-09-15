@@ -42,6 +42,7 @@ function runInstaller(commands: Record<string, string>) {
       ...process.env,
       PATH: `${directory}:/usr/bin:/bin`,
       COMMAND_LOG: log,
+      CLAUDE_CODE_SUBPROCESS_ENV_SCRUB: undefined,
     },
     encoding: "utf8",
   });
