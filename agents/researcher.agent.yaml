@@ -1,0 +1,61 @@
+# Applied with:  ant beta:agents create < agents/researcher.agent.yaml
+# Updated with:  ant beta:agents update --agent-id "$AGENT_ID" --version N < agents/researcher.agent.yaml
+# Without ant:    eval "$(bun agents/setup.ts)"   (creates or updates the agent and an environment)
+#
+# claude-mythos-5 is available only through Project Glasswing. If your org is not
+# enrolled, swap the id below for claude-fable-5 — same capabilities, same pricing,
+# same API surface. Both require 30-day data retention; requests from a
+# zero-data-retention org return 400 on every call.
+
+name: Research Agent
+
+model:
+  id: claude-mythos-5
+  # A per-session `model` override replaces this whole object, so this `effort`
+  # is not carried over: set `effort` inside the override's `model` to keep it.
+  # high is the recommended floor for intelligence-sensitive work; sweep low/medium
+  # on your own evals — Mythos/Fable at low often beats older models at max.
+  effort: high
+
+# Thinking is always on for Mythos 5 / Fable 5 and is NOT configured here.
+# There is no thinking field on the agent object, and on the Messages API these
+# models reject {type: "disabled"} and {type: "enabled", budget_tokens: N} with a 400.
+
+system: |
+  You research questions end to end and report findings with sources.
+
+  Deliver what was asked, at the scope intended. Make routine judgment calls
+  yourself; check in only when different readings lead to materially different
+  work. If you think the ask is mistaken, say so in a sentence and continue with
+  the task as asked.
+
+  Before reporting progress, audit each claim against a tool result from this
+  session. Report only work you can point to evidence for; if something is not
+  yet verified, say so.
+
+  Write final deliverables to /mnt/session/outputs/ so the caller can retrieve
+  them. Give every factual claim a source URL or file path.
+
+tools:
+  - type: agent_toolset_20260401
+
+  # Custom tools run on YOUR side: the agent emits agent.custom_tool_use, the
+  # session goes idle, your runner answers with user.custom_tool_result. This is
+  # how you reach an internal API without the credential ever entering the sandbox.
+  # agents/run-researcher.ts is the runner; it answers lookup_ticket from GitHub Issues.
+  - type: custom
+    name: lookup_ticket
+    description: >
+      Look up a ticket (a GitHub issue or pull request) by ID and return its
+      title, status, labels, URL, and body. Call this whenever the user
+      references a ticket or issue number, or when you need the current state of
+      work tracked in GitHub. Do not guess ticket contents.
+    input_schema:
+      type: object
+      properties:
+        ticket_id:
+          type: string
+          description: >
+            owner/repo#number (e.g. acme/app#42), a github.com issue or pull
+            request URL, or #number for the runner's default repository.
+      required: [ticket_id]
