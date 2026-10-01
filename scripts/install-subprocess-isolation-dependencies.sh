@@ -44,6 +44,8 @@ fi
 
 # Ubuntu 24.04+ restricts unprivileged user namespaces via AppArmor.
 # The sysctl doesn't exist on older kernels — that's fine.
-if [[ -f /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]]; then
+# The path is overridable only so tests can exercise both branches.
+apparmor_userns_sysctl="${CLAUDE_CODE_APPARMOR_USERNS_SYSCTL_PATH:-/proc/sys/kernel/apparmor_restrict_unprivileged_userns}"
+if [[ -f "$apparmor_userns_sysctl" ]]; then
   sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 fi
