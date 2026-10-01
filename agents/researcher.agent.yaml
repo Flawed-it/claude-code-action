@@ -41,16 +41,20 @@ tools:
   # Custom tools run on YOUR side: the agent emits agent.custom_tool_use, the
   # session goes idle, your runner answers with user.custom_tool_result. This is
   # how you reach an internal API without the credential ever entering the sandbox.
+  # agents/run-researcher.ts is the runner; it answers lookup_ticket from GitHub Issues.
   - type: custom
     name: lookup_ticket
     description: >
-      Look up an internal ticket by ID and return its title, status, and body.
-      Call this whenever the user references a ticket number, or when you need
-      the current state of work tracked internally. Do not guess ticket contents.
+      Look up a ticket (a GitHub issue or pull request) by ID and return its
+      title, status, labels, URL, and body. Call this whenever the user
+      references a ticket or issue number, or when you need the current state of
+      work tracked in GitHub. Do not guess ticket contents.
     input_schema:
       type: object
       properties:
         ticket_id:
           type: string
-          description: "Ticket identifier, e.g. ENG-4417"
+          description: >
+            owner/repo#number (e.g. acme/app#42), a github.com issue or pull
+            request URL, or #number for the runner's default repository.
       required: [ticket_id]
