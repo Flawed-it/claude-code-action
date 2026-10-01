@@ -2,3 +2,5 @@
 test/fixtures/
 # Snapshot of PR-authored config kept for review; do not reformat
 .claude-pr/
+# Not valid YAML (contains a Python script); prettier cannot parse it
+.github/workflows/python-package-conda.yml

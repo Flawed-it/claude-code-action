@@ -15,6 +15,7 @@ git checkout -b feat/your-feature-name
 ```
 
 Branch naming conventions:
+
 - `feat/` - New features
 - `fix/` - Bug fixes
 - `docs/` - Documentation improvements
@@ -24,6 +25,7 @@ Branch naming conventions:
 ### 2. Make Your Changes
 
 Ensure your changes:
+
 - Follow TypeScript strictness rules (`noUnusedLocals`, `noUnusedParameters`)
 - Pass all tests: `bun test`
 - Pass type checking: `bun run typecheck`
@@ -82,6 +84,7 @@ git commit -S -m "Your message"
 ## After Merge
 
 Once merged to main:
+
 1. Tag the release if needed
 2. Update CHANGELOG
 3. Deploy to production via CI/CD
@@ -89,12 +92,14 @@ Once merged to main:
 ## Common Tasks
 
 ### Running Tests
+
 ```bash
 bun test                    # Run all tests
 bun test -- --filters=name # Run specific test
 ```
 
 ### Checking Code Quality
+
 ```bash
 bun run typecheck           # Type checking
 bun run format:check        # Formatting check
@@ -102,6 +107,7 @@ bun run format              # Auto-format code
 ```
 
 ### Viewing Changes
+
 ```bash
 git diff                    # Unstaged changes
 git diff --cached           # Staged changes
