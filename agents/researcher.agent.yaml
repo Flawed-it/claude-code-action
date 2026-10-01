@@ -1,5 +1,6 @@
 # Applied with:  ant beta:agents create < agents/researcher.agent.yaml
 # Updated with:  ant beta:agents update --agent-id "$AGENT_ID" --version N < agents/researcher.agent.yaml
+# Without ant:    eval "$(bun agents/setup.ts)"   (creates or updates the agent and an environment)
 #
 # claude-mythos-5 is available only through Project Glasswing. If your org is not
 # enrolled, swap the id below for claude-fable-5 — same capabilities, same pricing,

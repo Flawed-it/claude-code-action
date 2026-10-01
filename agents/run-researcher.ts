@@ -9,8 +9,8 @@
  *
  * Environment:
  *   ANTHROPIC_API_KEY           Claude API key (or an `ant auth login` profile)
- *   ANTHROPIC_AGENT_ID          ID returned by `ant beta:agents create`
- *   ANTHROPIC_ENVIRONMENT_ID    Managed Agents environment to run the session in
+ *   ANTHROPIC_AGENT_ID          ID printed by agents/setup.ts (or `ant beta:agents create`)
+ *   ANTHROPIC_ENVIRONMENT_ID    Environment printed by agents/setup.ts
  *   GITHUB_TOKEN                Token that can read the ticket repositories
  *   LOOKUP_TICKET_DEFAULT_REPO  owner/repo used for bare IDs like #42
  *                               (falls back to GITHUB_REPOSITORY)
